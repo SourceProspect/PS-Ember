@@ -1,4 +1,4 @@
-{{#ui-layout class="container" as |posts filter registration users filterWith registrationAction registrationNewAction|}}
+{{#ui-layout class="container" as |posts filter registration users loggedInUser filterWith registrationAction registrationNewAction registrationLogInAction|}}
 <!---->
 {{log "posts" posts}}
 <!---->
@@ -7,6 +7,8 @@
 {{log "users" users}}
 <!---->
 {{log "registrationNewAction" registrationNewAction}}
+<!---->
+{{log "registrationLogInAction" registrationLogInAction}}
 
 <h1>Prospect Source</h1>
 <input id="UserName" placeholder="UserName" value={{registration.UserName}} oninput={{action registrationAction}}>
@@ -15,7 +17,7 @@
 <input id="Password" placeholder="Password" value={{registration.Password}} oninput={{action registrationAction}}>
 <h1>{{registration.Password}}</h1>
 
-<button>Prospect Login</button>
+<button onclick={{action registrationLogInAction}}>Prospect Login</button>
 <br/>
 <button onclick={{action registrationNewAction }}>Register</button>
 <br/>
@@ -29,16 +31,22 @@
   <tr>
     <th>UserName</th>
     <th>Password</th>
+    <th>First Name</th>
   </tr>
   {{#each users as |u|}}
   <tr>
     <td>{{u.UserName}}</td>
     <td>{{u.Password}}</td>
+    <td>{{u.FirstName}}</td>
   </tr>
   {{/each}}
 </table>
+<h1>Logged In User: {{loggedInUser.UserName}}</h1>
+<br/>
 <hr/>
+<h4>Create Prospect Profile: {{loggedInUser.UserName}}</h4>
 <input id="FirstName" placeholder="FirstName" value={{registration.FirstName}} oninput={{action registrationAction}}>
 <h1>{{registration.FirstName}}</h1>
+<button>Create</button>
 
 {{/ui-layout}}

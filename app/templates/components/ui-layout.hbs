@@ -1,1 +1,11 @@
-{{yield posts filter registration users (action "filterWith" ) (action "registrationAction") (action "registrationNewAction")}}
+{{yield
+  posts
+  filter
+  registration
+  users
+  loggedInUser
+  (action "filterWith" )
+  (action "registrationAction")
+  (action "registrationNewAction")
+  (action "registrationLogInAction")
+}}

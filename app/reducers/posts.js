@@ -6,10 +6,11 @@ const { createSelector } = reselect;
 const initialState = {
   filter: undefined,
   all: undefined,
-  users:[
-    {UserName:'user 1'},
-    {UserName:'user 2', Password: 'pass123'},
+  users: [
+    { UserName: 'user1' },
+    { UserName: 'user2', Password: 'pass123' },
   ],
+  loggedInUser: {},
   registration: {
     UserName: ''
   }
@@ -18,12 +19,12 @@ const initialState = {
 export default function posts(state, action) {
   switch (action.type) {
     case 'POSTS:FETCH_API': {
-      console.log('\n\n\n POSTS:FETCH_API', {state}, {action},{initialState})
+      console.log('\n\n\n POSTS:FETCH_API', { state }, { action }, { initialState })
       const children = action.payload.data.children.map(child => child.data);
       const all = _.keyBy(children, post => post.id);
       return {
         ...state,
-        all: {...state.all, ...all}
+        all: { ...state.all, ...all }
       }
     }
 
@@ -41,38 +42,58 @@ export default function posts(state, action) {
     }
 
     case 'POSTS:REGISTRATION': {
-      console.log('\n\n\n POSTS:REGISTRATION', {state}, {action},{initialState})
-      const {registration} = state;
+      console.log('\n\n\n POSTS:REGISTRATION', { state }, { action }, { initialState })
+      const { registration } = state;
       const input = action.args[0];
       const inputTarget = input.target.id;
       const inputValue = input.target.value;
       const retState = {
         ...state,
         filter: action.author,
-        ...{registration:{
-          ...registration,
-          [inputTarget]: inputValue
-        }}
+        ...{
+          registration: {
+            ...registration,
+            [inputTarget]: inputValue
+          }
+        }
       }
-      console.log('\n\n\n POSTS:REGISTRATION', {retState}, {action},{initialState})
+      console.log('\n\n\n POSTS:REGISTRATION', { retState }, { action }, { initialState })
       return retState;
     }
 
     case 'POSTS:REGISTRATION_NEW': {
-      console.log('\n\n\n POSTS:REGISTRATION_NEW', {state}, {action},{initialState})
-      const {registration, users} = state;
+      console.log('\n\n\n POSTS:REGISTRATION_NEW', { state }, { action }, { initialState })
+      const { registration, users } = state;
       const retState = {
         ...state,
         filter: action.author,
-        ...{users: [...users, registration]},
-        ...{registration: {}},
+        ...{ users: [...users, registration] },
+        ...{ registration: {} },
       }
-      console.log('\n\n\n POSTS:REGISTRATION_NEW', {retState}, {action},{initialState})
+      console.log('\n\n\n POSTS:REGISTRATION_NEW', { retState }, { action }, { initialState })
+      return retState;
+    }
+
+    case 'POSTS:LOGIN': {
+      console.log('\n\n\n POSTS:LOGIN', { state }, { action }, { initialState })
+      const { registration, users, loggedInUser } = state;
+      const { UserName, Password } = registration;
+      const match = users
+        .filter(u => u.UserName === UserName)
+        .filter(u => u.Password === Password)
+        .length
+
+      const retState = {
+        ...state,
+        filter: action.author,
+        ...match && { loggedInUser: { UserName } },
+      }
+      console.log('\n\n\n POSTS:LOGIN', { retState }, { action }, { initialState })
       return retState;
     }
 
     default: {
-      console.log('\n\n\n default', {initialState})
+      console.log('\n\n\n default', { initialState })
       return state || initialState;
     }
   }
