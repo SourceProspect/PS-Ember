@@ -1,14 +1,44 @@
-{{#ui-layout class="container" as |posts filter registration filterWith registrationAction|}}
+{{#ui-layout class="container" as |posts filter registration users filterWith registrationAction registrationNewAction|}}
+<!---->
 {{log "posts" posts}}
-{{log "filter" filter}}
-{{log "filter" filter}}
-
-{{log "posts" posts}}
-{{log "filter" filter}}
-{{log "registration" registration}}
+<!---->
+{{log "registration hbs" registration}}
+<!---->
+{{log "users" users}}
+<!---->
+{{log "registrationNewAction" registrationNewAction}}
 
 <h1>Prospect Source</h1>
 <input id="UserName" placeholder="UserName" value={{registration.UserName}} oninput={{action registrationAction}}>
 <h1>{{registration.UserName}}</h1>
+
+<input id="Password" placeholder="Password" value={{registration.Password}} oninput={{action registrationAction}}>
+<h1>{{registration.Password}}</h1>
+
+<button>Prospect Login</button>
+<br/>
+<button onclick={{action registrationNewAction }}>Register</button>
+<br/>
+<br/>
+<br/>
+
+<br/>
+<hr/>
+<h1>Users</h1>
+<table style="width:100%">
+  <tr>
+    <th>UserName</th>
+    <th>Password</th>
+  </tr>
+  {{#each users as |u|}}
+  <tr>
+    <td>{{u.UserName}}</td>
+    <td>{{u.Password}}</td>
+  </tr>
+  {{/each}}
+</table>
+<hr/>
+<input id="FirstName" placeholder="FirstName" value={{registration.FirstName}} oninput={{action registrationAction}}>
+<h1>{{registration.FirstName}}</h1>
 
 {{/ui-layout}}

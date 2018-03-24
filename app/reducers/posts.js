@@ -6,8 +6,12 @@ const { createSelector } = reselect;
 const initialState = {
   filter: undefined,
   all: undefined,
+  users:[
+    {UserName:'user 1'},
+    {UserName:'user 2', Password: 'pass123'},
+  ],
   registration: {
-    UserName: 'bob'
+    UserName: ''
   }
 };
 
@@ -39,17 +43,31 @@ export default function posts(state, action) {
     case 'POSTS:REGISTRATION': {
       console.log('\n\n\n POSTS:REGISTRATION', {state}, {action},{initialState})
       const {registration} = state;
-      const {UserName} = registration;
       const input = action.args[0];
       const inputTarget = input.target.id;
       const inputValue = input.target.value;
-
       const retState = {
         ...state,
         filter: action.author,
-        ...{registration:{[inputTarget]: inputValue}}
+        ...{registration:{
+          ...registration,
+          [inputTarget]: inputValue
+        }}
       }
       console.log('\n\n\n POSTS:REGISTRATION', {retState}, {action},{initialState})
+      return retState;
+    }
+
+    case 'POSTS:REGISTRATION_NEW': {
+      console.log('\n\n\n POSTS:REGISTRATION_NEW', {state}, {action},{initialState})
+      const {registration, users} = state;
+      const retState = {
+        ...state,
+        filter: action.author,
+        ...{users: [...users, registration]},
+        ...{registration: {}},
+      }
+      console.log('\n\n\n POSTS:REGISTRATION_NEW', {retState}, {action},{initialState})
       return retState;
     }
 
