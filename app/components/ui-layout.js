@@ -17,7 +17,8 @@ const dispatchToActions = dispatch => {
     filterWith: (author) => dispatch({ type: 'POSTS:FILTER_POSTS', author }),
     registrationAction: (...args) => dispatch({ type: 'POSTS:REGISTRATION', args }),
     registrationNewAction: (...args) => dispatch({ type: 'POSTS:REGISTRATION_NEW', args }),
-    registrationLogInAction: (...args) => dispatch({ type: 'POSTS:LOGIN', args })
+    registrationLogInAction: (...args) => dispatch({ type: 'POSTS:LOGIN', args }),
+    creatProfile : (...args) => dispatch({ type: 'POSTS:CREATE', args })
   }
 }
 

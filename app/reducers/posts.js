@@ -12,8 +12,10 @@ const initialState = {
   ],
   loggedInUser: {},
   registration: {
-    UserName: ''
-  }
+    UserName: '',
+    Password: '',
+    FirstName: ''
+  },
 };
 
 export default function posts(state, action) {
@@ -89,6 +91,34 @@ export default function posts(state, action) {
         ...match && { loggedInUser: { UserName } },
       }
       console.log('\n\n\n POSTS:LOGIN', { retState }, { action }, { initialState })
+      return retState;
+    }
+
+    case 'POSTS:CREATE': {
+      console.log('\n\n\n POSTS:CREATE', { state }, { action }, { initialState })
+      const { registration, users, loggedInUser } = state;
+
+      const match = users
+        .filter(u => u.UserName === loggedInUser.UserName)
+      const nonMatch = users
+        .filter(u => u.UserName !== loggedInUser.UserName)
+
+      console.log('\n\n\n match', { match })
+      console.log('\n\n\n nonMatch', { nonMatch })
+      const retState = {
+        ...state,
+        filter: action.author,
+        ...{
+          users: [
+            ...nonMatch,
+            ...[{
+              ...match[0],
+              FirstName: state.registration.FirstName
+            }]
+          ]
+        }
+      }
+      console.log('\n\n\n POSTS:CREATE', { retState }, { action }, { initialState })
       return retState;
     }
 

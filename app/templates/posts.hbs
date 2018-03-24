@@ -1,4 +1,4 @@
-{{#ui-layout class="container" as |posts filter registration users loggedInUser filterWith registrationAction registrationNewAction registrationLogInAction|}}
+{{#ui-layout class="container" as |posts filter registration users loggedInUser filterWith registrationAction registrationNewAction registrationLogInAction creatProfile|}}
 <!---->
 {{log "posts" posts}}
 <!---->
@@ -47,6 +47,6 @@
 <h4>Create Prospect Profile: {{loggedInUser.UserName}}</h4>
 <input id="FirstName" placeholder="FirstName" value={{registration.FirstName}} oninput={{action registrationAction}}>
 <h1>{{registration.FirstName}}</h1>
-<button>Create</button>
+<button onclick={{action creatProfile}}>Create</button>
 
 {{/ui-layout}}
