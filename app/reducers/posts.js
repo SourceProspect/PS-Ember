@@ -9,6 +9,7 @@ const initialState = {
   users: [
     { UserName: 'user1' },
     { UserName: 'user2', Password: 'pass123' },
+    { UserName: 'user3', Password: 'pass123', FirstName: 'Joe' },
   ],
   loggedInUser: {},
   registration: {
@@ -83,12 +84,20 @@ export default function posts(state, action) {
       const match = users
         .filter(u => u.UserName === UserName)
         .filter(u => u.Password === Password)
-        .length
+
+      const nonMatch = users
+        .filter(u => u.UserName !== loggedInUser.UserName)
 
       const retState = {
         ...state,
         filter: action.author,
-        ...match && { loggedInUser: { UserName } },
+        ...match.length && { loggedInUser: { UserName } },
+        ...{
+          registration: {
+            ...registration,
+            FirstName: match[0].FirstName,
+          }
+        },
       }
       console.log('\n\n\n POSTS:LOGIN', { retState }, { action }, { initialState })
       return retState;
