@@ -1,21 +1,14 @@
-{{#ui-layout class="container" as |posts filter filterWith|}}
-  <table class="table table-border">
-    <tbody>
-      {{#if filter}}
-        <tr>
-          <td class="active-filter">Showing posts for => {{filter}}</td>
-        </tr>
-      {{/if}}
-      {{#each-in posts as |key post|}}
-      <tr>
-        <td>
-          <div class="title">{{post.title}}</div>
-          <span class="author">{{post.author}}</span>
-          <button onclick={{action filterWith post.author}}
-            class="pull-right filter {{unless (is-equal post.author filter) "inactive"}}"></button>
-        </td>
-      </tr>
-      {{/each-in}}
-    </tbody>
-  </table>
+{{#ui-layout class="container" as |posts filter registration filterWith registrationAction|}}
+{{log "posts" posts}}
+{{log "filter" filter}}
+{{log "filter" filter}}
+
+{{log "posts" posts}}
+{{log "filter" filter}}
+{{log "registration" registration}}
+
+<h1>Prospect Source</h1>
+<input id="UserName" placeholder="UserName" value={{registration.UserName}} oninput={{action registrationAction}}>
+<h1>{{registration.UserName}}</h1>
+
 {{/ui-layout}}
