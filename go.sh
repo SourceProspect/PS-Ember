@@ -8,6 +8,6 @@ git commit -am "prod build";
 git push;
 
 # serve things
-#fuser -k 8080/tcp
-#http-server ./docs & # run in background for fun
+fuser -k 8080/tcp
+http-server ./docs & # run in background for fun
 surge --domain prospectsource.surge.sh ./docs
