@@ -1,4 +1,5 @@
-{{#ui-layout class="container" as |posts filter registration users loggedInUser filterWith registrationAction registrationNewAction registrationLogInAction creatProfile|}}
+{{#ui-layout class="container" as |posts filter registration users loggedInUser filterWith registrationAction registrationNewAction
+registrationLogInAction creatProfile|}}
 <!---->
 {{log "posts" posts}}
 <!---->
@@ -9,7 +10,8 @@
 {{log "registrationNewAction" registrationNewAction}}
 <!---->
 {{log "registrationLogInAction" registrationLogInAction}}
-
+<!---->
+{{#if posts.showLogin}}
 <h1>Prospect Source</h1>
 <input id="UserName" placeholder="UserName" value={{registration.UserName}} oninput={{action registrationAction}}>
 <h1>{{registration.UserName}}</h1>
@@ -20,33 +22,72 @@
 <button onclick={{action registrationLogInAction}}>Prospect Login</button>
 <br/>
 <button onclick={{action registrationNewAction }}>Register</button>
-<br/>
-<br/>
-<br/>
+{{/if }}
 
-<br/>
-<hr/>
-<h1>Users</h1>
-<table style="width:100%">
-  <tr>
-    <th>UserName</th>
-    <th>Password</th>
-    <th>First Name</th>
-  </tr>
-  {{#each users as |u|}}
-  <tr>
-    <td>{{u.UserName}}</td>
-    <td>{{u.Password}}</td>
-    <td>{{u.FirstName}}</td>
-  </tr>
-  {{/each}}
-</table>
-<h1>Logged In User: {{loggedInUser.UserName}}</h1>
-<br/>
-<hr/>
+{{#if posts.showRegister}}
 <h4>Create Prospect Profile: {{loggedInUser.UserName}}</h4>
+<input id="UserName" placeholder="UserName" value={{registration.UserName}} oninput={{action registrationAction}}>
+<br/>
 <input id="FirstName" placeholder="FirstName" value={{registration.FirstName}} oninput={{action registrationAction}}>
-<h1>{{registration.FirstName}}</h1>
+<br/>
+<input id="LastName" placeholder="LastName" value={{registration.LastName}} oninput={{action registrationAction}}>
+<br/>
+<input id="email" placeholder="email" value={{registration.email}} oninput={{action registrationAction}}>
+<br/>
+<input id="password" placeholder="password" value={{registration.password}} oninput={{action registrationAction}}>
+<br/>
 <button onclick={{action creatProfile}}>Create</button>
+{{/if }}
+
+{{#if posts.showContact}}
+<h4>Add Contact Information: {{loggedInUser.UserName}}</h4>
+<input id="Phone" placeholder="Phone" value={{registration.Phone}} oninput={{action registrationAction}}>
+<br/>
+<input id="Email" placeholder="Email" value={{registration.email}} oninput={{action registrationAction}}>
+<br/>
+<input id="CoachName" placeholder="CoachName" value={{registration.CoachName}} oninput={{action registrationAction}}>
+<br/>
+<input id="CoachPhone" placeholder="CoachPhone" value={{registration.CoachPhone}} oninput={{action registrationAction}}>
+<br/>
+<input id="password" placeholder="password" value={{registration.password}} oninput={{action registrationAction}}>
+<br/>
+<button onclick={{action creatProfile}}> Next </button>
+{{/if }}
+
+{{#if posts.showAthletic}}
+<h4>Add Athletic Information: {{loggedInUser.UserName}}</h4>
+<input id="Height" placeholder="Height" value={{registration.Height}} oninput={{action registrationAction}}>
+<br/>
+<input id="Weight" placeholder="Weight" value={{registration.Weight}} oninput={{action registrationAction}}>
+<br/>
+<input id="Vertical" placeholder="Vertical" value={{registration.Vertical}} oninput={{action registrationAction}}>
+<br/>
+<input id="Position" placeholder="Position" value={{registration.Position}} oninput={{action registrationAction}}>
+<br/>
+<input id="Club" placeholder="Club" value={{registration.Club}} oninput={{action registrationAction}}>
+<br/>
+<input id="HighSchool" placeholder="HighSchool" value={{registration.HighSchool}} oninput={{action registrationAction}}>
+<br/>
+<button onclick={{action creatProfile}}> Next </button>
+{{/if }}
+
+{{#if posts.showAcademic}}
+<h4>Add Academic Information: {{loggedInUser.UserName}}</h4>
+<input id="GPA" placeholder="GPA" value={{registration.GPA}} oninput={{action registrationAction}}>
+<br/>
+<input id="ACT" placeholder="ACT" value={{registration.ACT}} oninput={{action registrationAction}}>
+<br/>
+<input id="ClassRank" placeholder="ClassRank" value={{registration.ClassRank}} oninput={{action registrationAction}}>
+<br/>
+<button onclick={{action creatProfile}}> Next </button>
+{{/if }}
+
+{{#if posts.showTwitter}}
+<h4>Twitter</h4>
+<input id="Twitter" placeholder="@twitterhandle" value={{registration.Twitter}} oninput={{action registrationAction}}>
+<br/>
+<button onclick={{action creatProfile}}> Next </button>
+{{/if }}
+
 
 {{/ui-layout}}

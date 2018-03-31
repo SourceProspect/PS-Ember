@@ -1,11 +1,19 @@
 import { connect } from 'ember-redux';
-import { filterPosts } from '../reducers/posts';
 
 const stateToComputed = state => {
-  console.log('\n\n\n stateToComputed', { state })
+  const {page} = state.posts;
   return {
-    posts: filterPosts(state),
-    filter: state.posts.filter,
+    posts: {
+      ...state.posts,
+      ...{
+        showLogin: page === 'Login',
+        showRegister: page === 'Register',
+        showContact: page === 'Contact',
+        showAthletic: page === 'Athletic',
+        showAcademic: page === 'Academic',
+        showTwitter: page === 'Twitter',
+      }
+    },
     registration: state.posts.registration,
     users: state.posts.users,
     loggedInUser: state.posts.loggedInUser,
@@ -18,7 +26,7 @@ const dispatchToActions = dispatch => {
     registrationAction: (...args) => dispatch({ type: 'POSTS:REGISTRATION', args }),
     registrationNewAction: (...args) => dispatch({ type: 'POSTS:REGISTRATION_NEW', args }),
     registrationLogInAction: (...args) => dispatch({ type: 'POSTS:LOGIN', args }),
-    creatProfile : (...args) => dispatch({ type: 'POSTS:CREATE', args })
+    creatProfile: (...args) => dispatch({ type: 'POSTS:CREATE', args })
   }
 }
 

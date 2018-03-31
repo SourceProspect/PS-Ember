@@ -6,17 +6,14 @@ const { createSelector } = reselect;
 const initialState = {
   filter: undefined,
   all: undefined,
+  page: 'Login',
+  registration: {},
+  loggedInUser: {},
   users: [
     { UserName: 'user1' },
     { UserName: 'user2', Password: 'pass123' },
     { UserName: 'user3', Password: 'pass123', FirstName: 'Joe' },
   ],
-  loggedInUser: {},
-  registration: {
-    UserName: '',
-    Password: '',
-    FirstName: ''
-  },
 };
 
 export default function posts(state, action) {
@@ -69,6 +66,7 @@ export default function posts(state, action) {
       const { registration, users } = state;
       const retState = {
         ...state,
+        ...{ page: 'Register' },
         filter: action.author,
         ...{ users: [...users, registration] },
         ...{ registration: {} },
@@ -111,18 +109,40 @@ export default function posts(state, action) {
         .filter(u => u.UserName === loggedInUser.UserName)
       const nonMatch = users
         .filter(u => u.UserName !== loggedInUser.UserName)
-
+      const nextPage = () => {
+        switch (state.page) {
+          case 'Login': {
+            return 'Register'
+          }
+          case 'Register': {
+            return 'Contact'
+          }
+          case 'Contact': {
+            return 'Athletic'
+          }
+          case 'Athletic': {
+            return 'Academic'
+          }
+          case 'Academic': {
+            return 'Twitter'
+          }
+          default: {
+            return 'Login'
+          }
+        }
+      }
       console.log('\n\n\n match', { match })
       console.log('\n\n\n nonMatch', { nonMatch })
       const retState = {
         ...state,
-        filter: action.author,
+        ...{ page: nextPage() },
+        ...{ loggedInUser: { UserName: registration.UserName } },
         ...{
           users: [
             ...nonMatch,
             ...[{
               ...match[0],
-              FirstName: state.registration.FirstName
+              ...state.registration,
             }]
           ]
         }
