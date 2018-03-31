@@ -1,8 +1,8 @@
 . ~/.nvm/nvm.sh
 nvm i --lts
 
-ember build --environment=production
 rm -rf dist docs;
+ember build --environment=production
 mv dist docs;
 git add docs -f;
 git commit -am "prod build";
