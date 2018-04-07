@@ -7,6 +7,7 @@ git add docs -f;
 git commit -am "prod build";
 git push;
 
+npm i -g http-server surge
 # serve things
 fuser -k 8080/tcp
 http-server ./docs & # run in background for fun
