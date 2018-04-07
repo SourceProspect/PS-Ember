@@ -126,6 +126,12 @@ export default function posts(state, action) {
           case 'Academic': {
             return 'Twitter'
           }
+          case 'Twitter': {
+            return 'Dashboard'
+          }
+          case 'Dashboard': {
+            return 'Interest'
+          }
           default: {
             return 'Login'
           }
@@ -150,7 +156,21 @@ export default function posts(state, action) {
       console.log('\n\n\n POSTS:CREATE', { retState }, { action }, { initialState })
       return retState;
     }
-
+    case 'POSTS:INTEREST': {
+      const { loggedInUser } = state;
+      const input = action.args[0].target.id;
+      console.log('\n\n\n POSTS:INTEREST', { state }, { action }, { initialState }, {input})
+      const currentValue = loggedInUser[input];
+      console.log('\n\n\n POSTS:INTEREST', { currentValue  })
+      return {
+        ...state,
+        ...{loggedInUser:{
+          ...loggedInUser,
+          [input]: !!loggedInUser[input] ? currentValue+1 : 1
+          }
+        }
+      }
+    }
     default: {
       console.log('\n\n\n default', { initialState })
       return state || initialState;

@@ -10,6 +10,7 @@
       registrationNewAction
       registrationLogInAction
       creatProfile
+      interest
      |}}
 <!---->
 {{log "posts" posts}}
@@ -98,6 +99,56 @@
   <input id="Twitter" placeholder="@twitterhandle" value={{registration.Twitter}} oninput={{action registrationAction}}>
   <br/>
   <button onclick={{action creatProfile}}> Next </button>
+{{/if }}
+
+{{#if posts.showProspectDashboard}}
+  <h4>Prospect Dashboard</h4>
+  <button  style="width: 5em; height: 5em; border-radius:5em" onclick={{action creatProfile}}> + </button>
+  <div style="display:inline-block; margin:20px">
+    <div style="padding: 5px">
+    Add Recruiting Interest
+    </div>
+    <div>
+    <input style="margin-left: 5px" type="radio" name="editList" id="always" value="always"/>
+    <input style="margin-left: 20px" type="radio" name="editList" id="never" value="never"/>
+    <input style="margin-left: 20px" type="radio" name="editList" id="change" value="costChange"/>
+    <input style="margin-left: 20px" type="radio" name="editList" id="change" value="costChange"/>
+    </div>
+  </div>
+  <br/>
+  <button  style="width: 5em; height: 5em; border-radius:5em" onclick={{action creatProfile}}> + </button>
+  <div style="display:inline-block; margin:20px">
+    <div style="padding: 5px">
+      Send Profile To Coaches
+    </div>
+    <div>
+      <input style="margin-left: 5px" type="radio" name="editList" id="always" value="always"/>
+      <input style="margin-left: 20px" type="radio" name="editList" id="never" value="never"/>
+      <input style="margin-left: 20px" type="radio" name="editList" id="change" value="costChange"/>
+      <input style="margin-left: 20px" type="radio" name="editList" id="change" value="costChange"/>
+    </div>
+  </div>
+{{/if }}
+
+{{#if posts.showProspectInterest}}
+  <h4> Prospect Interest </h4>
+  <div style="display:inline-block; width:100%;  margin:0 100px">
+    <div>
+    <input style="margin-left: 5px" type="radio" name="editList" id="always" value="always"/>
+    <input style="margin-left: 20px" type="radio" name="editList" id="never" value="never"/>
+    <input style="margin-left: 20px" type="radio" name="editList" id="change" value="costChange"/>
+    <input style="margin-left: 20px" type="radio" name="editList" id="change" value="costChange"/>
+    </div>
+  </div>
+  <br/>
+  <div style=" width:100%;  margin:50px 20px">
+    {{log 'loggedInUser' loggedInUser }}
+  <button  id="mail" style="width: 5em; height: 5em; border-radius:5em" onclick={{action interest}}> + {{loggedInUser.mail}} </button> <div style="margin-left: 20px; display:inline-block"> Recieved Mailing</div> <br/>
+  <button  id="text" style="width: 5em; height: 5em; border-radius:5em" onclick={{action interest}}> + {{loggedInUser.text}} </button> <div style="margin-left: 20px; display:inline-block"> Recieved Text</div> <br/>
+  <button  id="call" style="width: 5em; height: 5em; border-radius:5em" onclick={{action interest}}> + {{loggedInUser.call}} </button> <div style="margin-left: 20px; display:inline-block"> Recieved Call</div> <br/>
+  <button  id="visit" style="width: 5em; height: 5em; border-radius:5em" onclick={{action interest}}> + {{loggedInUser.visit}} </button> <div style="margin-left: 20px; display:inline-block"> Private Visit</div> <br/>
+  <button  id="offer" style="width: 5em; height: 5em; border-radius:5em" onclick={{action interest}}> + {{loggedInUser.offer}} </button> <div style="margin-left: 20px; display:inline-block"> Scholarship Offer </div>
+  </div>
 {{/if }}
 
 

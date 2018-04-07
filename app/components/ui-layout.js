@@ -12,6 +12,8 @@ const stateToComputed = state => {
         showAthletic: page === 'Athletic',
         showAcademic: page === 'Academic',
         showTwitter: page === 'Twitter',
+        showProspectDashboard: page === 'Dashboard',
+        showProspectInterest: page === 'Interest',
       }
     },
     registration: state.posts.registration,
@@ -26,7 +28,8 @@ const dispatchToActions = dispatch => {
     registrationAction: (...args) => dispatch({ type: 'POSTS:REGISTRATION', args }),
     registrationNewAction: (...args) => dispatch({ type: 'POSTS:REGISTRATION_NEW', args }),
     registrationLogInAction: (...args) => dispatch({ type: 'POSTS:LOGIN', args }),
-    creatProfile: (...args) => dispatch({ type: 'POSTS:CREATE', args })
+    creatProfile: (...args) => dispatch({ type: 'POSTS:CREATE', args }),
+    interest: (...args) => dispatch({ type: 'POSTS:INTEREST', args })
   }
 }
 
