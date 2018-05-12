@@ -1,7 +1,10 @@
 import { connect } from 'ember-redux';
 
 const stateToComputed = state => {
-  const {page} = state.posts;
+  const {posts, loggedInUser } = state;
+  const schoolSearchValue = loggedInUser ? loggedInUser.schoolSearchValue : '';
+  const {page, filteredSchools} = posts;
+
   return {
     posts: {
       ...state.posts,
@@ -14,6 +17,8 @@ const stateToComputed = state => {
         showTwitter: page === 'Twitter',
         showProspectDashboard: page === 'Dashboard',
         showProspectInterest: page === 'Interest',
+        showProspectInterest2: page === 'Interest2',
+        filteredSchools
       }
     },
     registration: state.posts.registration,
@@ -29,7 +34,8 @@ const dispatchToActions = dispatch => {
     registrationNewAction: (...args) => dispatch({ type: 'POSTS:REGISTRATION_NEW', args }),
     registrationLogInAction: (...args) => dispatch({ type: 'POSTS:LOGIN', args }),
     creatProfile: (...args) => dispatch({ type: 'POSTS:CREATE', args }),
-    interest: (...args) => dispatch({ type: 'POSTS:INTEREST', args })
+    interest: (...args) => dispatch({ type: 'POSTS:INTEREST', args }),
+    schoolSearch: (...args) => dispatch({ type: 'POSTS:SEARCH_SCHOOL', args })
   }
 }
 

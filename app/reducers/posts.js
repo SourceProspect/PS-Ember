@@ -3,18 +3,59 @@ import reselect from 'reselect';
 
 const { createSelector } = reselect;
 
+  const schools = [
+    'Iowa State',
+    'Loser Iowa', 
+    'Boston',
+    'Indian Hills'
+  ];
 const initialState = {
   filter: undefined,
   all: undefined,
   page: 'Login',
   registration: {},
-  loggedInUser: {},
+  loggedInUser: {
+    schoolSearchValue: '',
+  },
+  filteredSchools: schools,
   users: [
     { UserName: 'user1' },
     { UserName: 'user2', Password: 'pass123' },
     { UserName: 'user3', Password: 'pass123', FirstName: 'Joe' },
   ],
 };
+
+const nextPage = (page) => {
+  switch (page) {
+    case 'Login': {
+      return 'Register'
+    }
+    case 'Register': {
+      return 'Contact'
+    }
+    case 'Contact': {
+      return 'Athletic'
+    }
+    case 'Athletic': {
+      return 'Academic'
+    }
+    case 'Academic': {
+      return 'Twitter'
+    }
+    case 'Twitter': {
+      return 'Dashboard'
+    }
+    case 'Dashboard': {
+      return 'Interest'
+    }
+    case 'Interest': {
+      return 'Interest2'
+    }
+    default: {
+      return 'Login'
+    }
+  }
+}
 
 export default function posts(state, action) {
   switch (action.type) {
@@ -109,39 +150,12 @@ export default function posts(state, action) {
         .filter(u => u.UserName === loggedInUser.UserName)
       const nonMatch = users
         .filter(u => u.UserName !== loggedInUser.UserName)
-      const nextPage = () => {
-        switch (state.page) {
-          case 'Login': {
-            return 'Register'
-          }
-          case 'Register': {
-            return 'Contact'
-          }
-          case 'Contact': {
-            return 'Athletic'
-          }
-          case 'Athletic': {
-            return 'Academic'
-          }
-          case 'Academic': {
-            return 'Twitter'
-          }
-          case 'Twitter': {
-            return 'Dashboard'
-          }
-          case 'Dashboard': {
-            return 'Interest'
-          }
-          default: {
-            return 'Login'
-          }
-        }
-      }
+
       console.log('\n\n\n match', { match })
       console.log('\n\n\n nonMatch', { nonMatch })
       const retState = {
         ...state,
-        ...{ page: nextPage() },
+        ...{ page: nextPage(state.page) },
         ...{ loggedInUser: { UserName: registration.UserName } },
         ...{
           users: [
@@ -164,12 +178,36 @@ export default function posts(state, action) {
       console.log('\n\n\n POSTS:INTEREST', { currentValue  })
       return {
         ...state,
+        ...{ page: nextPage(state.page) },
         ...{loggedInUser:{
           ...loggedInUser,
           [input]: !!loggedInUser[input] ? currentValue+1 : 1
           }
         }
       }
+    }
+    case 'POSTS:SEARCH_SCHOOL': {
+      const { loggedInUser } = state;
+      const schoolSearchValue = action.args[0].target.value;
+      console.log('\n\n\n POSTS:SEARCH_SCHOOL', { state }, { action },{schoolSearchValue})
+      console.log('\n\n\n POSTS:SEARCH_SCHOOL', { state})
+      console.log({schoolSearchValue})
+      const filteredSchools = schoolSearchValue.length >= 1 ? 
+      schools.filter(
+        school=>school.toLowerCase().indexOf(schoolSearchValue.toLowerCase()) > -1
+      ) 
+      : schools;
+      console.log({filteredSchools})
+      const retState = {
+        ...state,
+        loggedInUser: {
+          ...loggedInUser,
+          schoolSearchValue
+        },
+        filteredSchools 
+      }
+      console.log('\n\n\n POSTS:SEARCH_SCHOOL', { retState})
+      return retState;
     }
     default: {
       console.log('\n\n\n default', { initialState })

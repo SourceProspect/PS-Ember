@@ -11,6 +11,7 @@
       registrationLogInAction
       creatProfile
       interest
+      schoolSearch
      |}}
 <!---->
 {{log "posts" posts}}
@@ -151,5 +152,18 @@
   </div>
 {{/if }}
 
+{{#if posts.showProspectInterest2}}
+  <h4> Prospect Interest 2</h4>
+  <button  id="offer" style="width: 5em; height: 5em; border-radius:5em" disabled>d1</button> <div style="margin-left: 20px; display:inline-block"></div>
+  <button  id="offer" style="width: 5em; height: 5em; border-radius:5em" disabled>d2</button> <div style="margin-left: 20px; display:inline-block"></div>
+  <button  id="offer" style="width: 5em; height: 5em; border-radius:5em" disabled>d3</button> <div style="margin-left: 20px; display:inline-block"></div>
+  <button  id="offer" style="width: 5em; height: 5em; border-radius:5em" disabled>d4</button> <div style="margin-left: 20px; display:inline-block"></div>
+  <input type='text' value={{loggedInUser.schoolSearchValue}} oninput={{action schoolSearch}}/>
+
+{{log 'schools' posts posts.filteredSchools}}
+ {{#each posts.filteredSchools as |school|}}
+  <div>{{school}}</div>
+ {{/each }}
+{{/if }}
 
 {{/ui-layout}}
